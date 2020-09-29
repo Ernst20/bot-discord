@@ -17,6 +17,7 @@ const prefix = '-';
 var version = '1.0.1';
 const talkedRecently = new Set();
 const daily = new Set();
+const rob = new Set();
 
 client.once('ready', () => {
     console.log('your bot name is online!');
@@ -145,6 +146,34 @@ client.on('message', message => {
                     // Removes the user from the set after a minute
                     daily.delete(message.author.id);
                 }, 1440 * 1000);
+            }
+            break;
+        case 'rob':
+            if (!args[1]) {
+                message.channel.send('You need to mention someone')
+                return
+            }
+            if (rob.has(message.author.id)) {
+                message.reply('You have to wait 5 minutes before doing that again')
+                return
+
+            } else {
+                const target = message.mentions.users.first() || message.author
+                const targetID = target.id;
+
+                var MathY = Math.floor(((Math.random() * 100) / 100) * currencyMap[targetID])
+                if (target === message.author) {
+                    message.channel.send(`You can't rob yourself idiot`)
+                    return
+                }
+                currencyMap[message.author.id] = currencyMap[message.author.id] + MathY
+                currencyMap[targetID] = currencyMap[targetID] - MathY
+                message.channel.send('You Robbed ' + target + ' And got ' + MathY + ' money out of it');
+
+                rob.add(message.author.id);
+                setTimeout(() => {
+                    rob.delete(message.author.id);
+                }, 300 * 1000);
             }
             break;
         case 'exp':

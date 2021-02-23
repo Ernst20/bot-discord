@@ -238,4 +238,4 @@ client.on('message', message => {
     });
 });
 
-client.login('NzU2MTE2NDgzNDMxNDY1MDQ1.X2NKWQ.ArBkO5ODNQQldfbjwte1WPtdTos');
+client.login('secret goes brrr');
